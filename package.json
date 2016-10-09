@@ -1,0 +1,23 @@
+{
+  "name": "item-cards",
+  "version": "0.1.0",
+  "description": "Generates Printable Item Cards",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msarchet/item-cards.git"
+  },
+  "author": "Michael Sarchet <mikesarchet@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msarchet/item-cards/issues"
+  },
+  "homepage": "https://github.com/msarchet/item-cards#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "pdfkit": "^0.8.0"
+  }
+}
