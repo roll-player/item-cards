@@ -1,28 +1,9 @@
-const program = require('commander')
 const pdfkit = require('pdfkit')
-const package = require('./package.json')
 const items = require('./items.json')
 const scrolls = require('./scrolls.json')
-
 const fs = require('fs')
 
-const nameRegex = /(.+?)(\[(\d)\]|)$/ 
-const names = value =>  { 
-  const names = value.split(',').map(name => name.trim())
-
-  return names.map(name => {
-    console.log(name)
-    let matches = nameRegex.exec(name)
-    console.log(matches)
-    let itemName = matches[1].trim()
-    let count = matches[3] || 1
-
-    return {
-      name: itemName,
-      count
-    }
-  })
-}
+const inchesToPoints = inches => inches * 72;
 
 const renderItem = (item, doc) => {
 
@@ -67,36 +48,59 @@ const renderItem = (item, doc) => {
   }
 }
 
-const inchesToPoints = inches => inches * 72;
-
-program
-  .version(package.version)
-  .option('-i, --items <name[,name]>', 'Names of items', names)
-  .option('-f, --file <name>', 'File name')
-  .parse(process.argv)
-
 let allItems = [].concat(items, scrolls)
-
 const itemsIndex = allItems.reduce((initial, item) => { initial[item.name] = item; return initial }, {})
-let doc = new pdfkit({ margin: inchesToPoints(1) }) 
 
-doc.pipe(fs.createWriteStream(program.file))
-doc.font('Asimov.otf')
+const checkFilePermissions = fileName => {
+  return new Promise((resolve, reject) => {
+    fs.access(fileName, fs.W_OK, err => {
+      if (err && err.code !== 'ENOENT') {
+        console.log(err)
+        reject(err)
+        return
+      }
 
-program.items.forEach(item => {
-  let itemObj = itemsIndex[item.name]
+      console.log('no error')
+      resolve()
+    })
+  })
+}
+const generatePdf = (items, opts) => {
+  return new Promise((resolve, reject) => {
+    if(!items || items.length === 0) {
+      reject('No items passed to generate') 
+    }
 
-  if (!itemObj) {
-    console.error(`Could not find item with name ${item.name}`) 
-    return
-  }
+    opts = Object.assign({}, opts, {
+      fileName: 'items.pdf'
+    })
 
-  for(let i = 0; i < item.count; i++) {
-    renderItem(itemObj, doc)
-    doc.moveDown(4)
-  }
+    checkFilePermissions(opts.fileName).then(_ => {
+      let doc = new pdfkit({ margin: inchesToPoints(1) }) 
 
-})
+      doc.pipe(fs.createWriteStream(opts.fileName))
+      doc.font('Asimov.otf')
 
-doc.end()
+      items.forEach(item => {
+        let itemObj = itemsIndex[item.name]
 
+        if (!itemObj) {
+          console.error(`Could not find item with name ${item.name}`) 
+          return
+        }
+
+        for(let i = 0; i < item.count; i++) {
+          renderItem(itemObj, doc)
+          doc.moveDown(4)
+        }
+
+      })
+
+      doc.end()
+    }).catch(reject)
+  })
+}
+
+module.exports = {
+  generatePdf
+}

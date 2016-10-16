@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+const program = require('commander')
+const nameRegex = /(.+?)(\[(\d)\]|)$/ 
+const main = require('../main')
+const package = require('../package.json')
+
+const names = value =>  { 
+  const names = value.split(',').map(name => name.trim())
+
+  return names.map(name => {
+    console.log(name)
+    let matches = nameRegex.exec(name)
+    console.log(matches)
+    let itemName = matches[1].trim()
+    let count = matches[3] || 1
+
+    return {
+      name: itemName,
+      count
+    }
+  })
+}
+
+program
+  .version(package.version)
+  .option('-i, --items <name[,name]>', 'Names of items', names)
+  .option('-f, --file <name>', 'File name')
+  .parse(process.argv)
+
+main.generatePdf(program.items, { fileName: program.file }).catch(err => console.error(err))

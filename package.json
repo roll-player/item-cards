@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Generates Printable Item Cards",
   "main": "main.js",
+  "bin": {
+    "item-cards": "./bin/item-cards"
+  },
   "scripts": {
     "test": "test"
   },
@@ -19,5 +22,8 @@
   "dependencies": {
     "commander": "^2.9.0",
     "pdfkit": "^0.8.0"
+  },
+  "devDependencies": {
+    "standard": "^8.4.0"
   }
 }
