@@ -40,26 +40,18 @@
     "description": "You can use an action to speak this pearl's command word and regain on expended spell slot of up to 3rd level. Once you have used the pearl, it can't be used again until the next dawn"
   },
   {
-    "name": "Scroll of Dancing Lights",
-    "type": "Scroll",
-    "rarity": "Common",
-    "cost": "50 GP",
-    "useableBy": "Bard, Sorceror, Wizard",
-    "description": "This scroll allows the reader to cast the cantrip Dancing Lights. This spell has a DC of 13."
-  },
-  {
-    "name": "Scroll of Detect Thoughts",
-    "type": "Scroll",
-    "rarity": "Uncommon",
-    "cost": "250 GP",
-    "useableBy": "Bard, Sorceror, Wizard",
-      "description": "This scroll allows the reader to cast the 2nd level spell Detect Thoughts. This spell has a DC of 13. If this spell is on your classes spell list but of a level higher than you can normally cast, you must make a DC 12 Arcana check to read this scroll. On a failed check this scroll is destroyed."
-  },
-  {
     "name": "Bag of Holding",
     "type": "Wondrous (Equipment)",
     "rarity": "Uncommon",
     "cost": "500 GP",
     "description": "This bag has an interior space considerably larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet. The bag weighs 15 pounds, regardless of its contents. Retrieving an item from the bag requires an action.\r\nIf the bag is overloaded, pierced, or torn, it ruptures and is destroyed, and its contents are scattered in the Astral Plane. If the bag is turned inside out, its contents spill forth, unharmed, but the bag must be put right before it can be used again. Breathing creatures inside the bag can survive up to a number of minutes equal to 10 divided by the number of creatures (minimum 1 minute), after which time they begin to suffocate."
+  },
+  {
+    "name": "Wand of Magic Missles",
+    "type": "Wondrous (Wand)",
+    "rarity": "Uncommon",
+    "cost": "1000 GP",
+    "description": "This wand has 7 charges. While holding it, you can use an action to expend 1 or more of its charges to cast the magic missile spell from it. For 1 charge, you cast the 1st-level version of the spell. You can increase the spell slot level by one for each additional charge you expend.\r\n\r\nThe wand regain 1d6+1 expended charges daily at dawn. If you expend the wand's last charge, roll a d20. On a 1, the wand crumbles into ashes and is destroyed",
+    "charges": 7
   }
 ]

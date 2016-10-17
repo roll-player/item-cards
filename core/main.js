@@ -1,6 +1,7 @@
 const pdfkit = require('pdfkit')
-const items = require('./items.json')
-const scrolls = require('./scrolls.json')
+const items = require('../data/items.json')
+const scrolls = require('../data/scrolls.json')
+
 const fs = require('fs')
 
 const inchesToPoints = inches => inches * 72;
@@ -55,12 +56,10 @@ const checkFilePermissions = fileName => {
   return new Promise((resolve, reject) => {
     fs.access(fileName, fs.W_OK, err => {
       if (err && err.code !== 'ENOENT') {
-        console.log(err)
         reject(err)
         return
       }
 
-      console.log('no error')
       resolve()
     })
   })
@@ -97,6 +96,8 @@ const generatePdf = (items, opts) => {
       })
 
       doc.end()
+
+      resolve(opts.fileName)
     }).catch(reject)
   })
 }

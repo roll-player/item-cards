@@ -1,5 +1,5 @@
 const fs = require('fs')
-const spells = require('./spells.json')
+const spells = require('../data/spells.json')
 
 const lookup = spell => {
   switch (spell.level) {
