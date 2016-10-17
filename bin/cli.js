@@ -1,4 +1,5 @@
 const program = require('commander')
+const debug = require('debug')('cli')
 const nameRegex = /(.+?)(\[(\d)\]|)$/ 
 const main = require('../core/main')
 const package = require('../package.json')
@@ -20,13 +21,13 @@ const names = value =>  {
 
 module.exports = _ => {
   program
-    .version(package.version)
     .option('-i, --items <name[,name]>', 'Names of items', names)
     .option('-f, --file <name>', 'File name')
     .parse(process.argv)
-  console.log('Generating PDF')
+
+  debug('Generating PDF')
 
   main.generatePdf(program.items, { fileName: program.file })
-    .then(result => console.log(`Items generated at ${result}`))
-    .catch(err => console.error(err))
+    .then(result => debug(`Items generated at ${result}`))
+    .catch(err => debug(err))
 }

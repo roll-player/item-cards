@@ -21,6 +21,8 @@
   "homepage": "https://github.com/msarchet/item-cards#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "debug": "^2.2.0",
+    "nedb": "^1.8.0",
     "pdfkit": "^0.8.0"
   },
   "devDependencies": {

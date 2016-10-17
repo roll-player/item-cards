@@ -1,5 +1,7 @@
+const debug = require('debug')('generate')
 const fs = require('fs')
 const spells = require('../data/spells.json')
+const data = require('../core/data')
 
 const lookup = spell => {
   switch (spell.level) {
@@ -56,22 +58,18 @@ const lookup = spell => {
   }
 }
 
-const scrolls = Object.keys(spells).map(key => {
+Object.keys(spells).forEach(key => {
   let spell = spells[key]
   let { DC, attackBonus, rarity } = lookup(spell)
   spell.name = key
 
-  return {
+  debug(`Adding item ${spell.name}`)
+  data.addItem({
     name: `Scroll of ${spell.name}`,
     type: 'Scroll',
     rarity,
     cost: `${spell.level * 100 || 50} GP`,
     description: `This scroll allows the reader to cast ${spell.name}. The spell has a DC of ${DC} and an Spell Attack Bonus of ${attackBonus}. The scroll is destroyed upon reading.`
-  }
+  }).then(_ => debug(`done adding item ${spell.name}`))
 })
 
-fs.writeFile('scrolls.json', JSON.stringify(scrolls), err => {
-  if (err) {
-    console.error(err)
-  }
-})

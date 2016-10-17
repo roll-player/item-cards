@@ -1,13 +1,11 @@
+const debug = require('debug')('main')
 const pdfkit = require('pdfkit')
-const items = require('../data/items.json')
-const scrolls = require('../data/scrolls.json')
-
+const data = require('./data')
 const fs = require('fs')
 
 const inchesToPoints = inches => inches * 72;
 
 const renderItem = (item, doc) => {
-
   doc.fontSize(14)
   doc.text(item.name, { align: 'center' })
 
@@ -49,9 +47,6 @@ const renderItem = (item, doc) => {
   }
 }
 
-let allItems = [].concat(items, scrolls)
-const itemsIndex = allItems.reduce((initial, item) => { initial[item.name] = item; return initial }, {})
-
 const checkFilePermissions = fileName => {
   return new Promise((resolve, reject) => {
     fs.access(fileName, fs.W_OK, err => {
@@ -64,6 +59,7 @@ const checkFilePermissions = fileName => {
     })
   })
 }
+
 const generatePdf = (items, opts) => {
   return new Promise((resolve, reject) => {
     if(!items || items.length === 0) {
@@ -80,25 +76,37 @@ const generatePdf = (items, opts) => {
       doc.pipe(fs.createWriteStream(opts.fileName))
       doc.font('Asimov.otf')
 
-      items.forEach(item => {
-        let itemObj = itemsIndex[item.name]
+      debug(`starting render ${items[0]}`)
 
-        if (!itemObj) {
-          console.error(`Could not find item with name ${item.name}`) 
-          return
-        }
+      let itemPromises = items.map(item => getItem(item))
 
-        for(let i = 0; i < item.count; i++) {
-          renderItem(itemObj, doc)
-          doc.moveDown(4)
-        }
+      console.log(itemPromises.length)
+      Promise.all(itemPromises).then(values => {
+        debug('completed all')
 
+        values.forEach(value => {
+          debug('rendering items')
+          renderItem(value, doc) 
+        })
+
+        doc.end()
+        resolve(opts.fileName)
       })
-
-      doc.end()
-
-      resolve(opts.fileName)
     }).catch(reject)
+  })
+}
+
+const getItem = item => {
+  return new Promise((resolve, reject) => {
+    data.findItem(item.name)
+      .then(items => {
+        debug(`Found item ${item.name}`)
+        resolve(items[0])
+      })
+      .catch(err => {
+        debug(`Could not find item with name ${item.name}`)
+        resolve(null)
+      })
   })
 }
 
