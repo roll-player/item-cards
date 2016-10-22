@@ -1,3 +1,9 @@
 #!/usr/bin/env node
 const cli = require('./cli')
-cli()
+const debug = require('debug')('item-cards')
+
+try {
+  cli()
+} catch (e) {
+  debug(`Fatal Exception ${e}`)
+}

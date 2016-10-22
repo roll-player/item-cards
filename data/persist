@@ -60,6 +60,7 @@
 {"name":"Scroll of Comprehend Languages","type":"Scroll","rarity":"Common","cost":"100 GP","description":"This scroll allows the reader to cast Comprehend Languages. The spell has a DC of 13 and an Spell Attack Bonus of 5. The scroll is destroyed upon reading.","_id":"VyqIe82uPTAtBsSq"}
 {"name":"Scroll of Wall of Stone","type":"Scroll","rarity":"Rare","cost":"500 GP","description":"This scroll allows the reader to cast Wall of Stone. The spell has a DC of 17 and an Spell Attack Bonus of 9. The scroll is destroyed upon reading.","_id":"W8nFEObEWJoiwmZc"}
 {"name":"Scroll of Augury","type":"Scroll","rarity":"Uncommon","cost":"200 GP","description":"This scroll allows the reader to cast Augury. The spell has a DC of 13 and an Spell Attack Bonus of 5. The scroll is destroyed upon reading.","_id":"XlXAreII8pYt9orR"}
+{"name":"Potion of Healing","type":"Armor","requirements":[],"rarity":"Common","description":"","_id":"Y5FXeElv62vF47hE"}
 {"name":"Scroll of Gate","type":"Scroll","rarity":"Legendary","cost":"900 GP","description":"This scroll allows the reader to cast Gate. The spell has a DC of 19 and an Spell Attack Bonus of 11. The scroll is destroyed upon reading.","_id":"Y5Mr6F5XeaoDAFWx"}
 {"name":"Scroll of Dominate Monster","type":"Scroll","rarity":"Very Rare","cost":"800 GP","description":"This scroll allows the reader to cast Dominate Monster. The spell has a DC of 18 and an Spell Attack Bonus of 10. The scroll is destroyed upon reading.","_id":"Z3NIiWkx5EYGvWoQ"}
 {"name":"Scroll of Sleep","type":"Scroll","rarity":"Common","cost":"100 GP","description":"This scroll allows the reader to cast Sleep. The spell has a DC of 13 and an Spell Attack Bonus of 5. The scroll is destroyed upon reading.","_id":"Z7SftmfxSoal5uFn"}
@@ -125,3 +126,4 @@
 {"name":"Scroll of Resistance","type":"Scroll","rarity":"Common","cost":"50 GP","description":"This scroll allows the reader to cast Resistance. The spell has a DC of 13 and an Spell Attack Bonus of 5. The scroll is destroyed upon reading.","_id":"ygazbZtlKm52ejqs"}
 {"name":"Scroll of Mage Hand","type":"Scroll","rarity":"Common","cost":"50 GP","description":"This scroll allows the reader to cast Mage Hand. The spell has a DC of 13 and an Spell Attack Bonus of 5. The scroll is destroyed upon reading.","_id":"zAFV3EGv4405KUdt"}
 {"$$indexCreated":{"fieldName":"name","unique":true,"sparse":false}}
+{"name":"Potion of Healing","type":"Armor","requirements":[],"rarity":"Common","description":"","_id":"Y5FXeElv62vF47hE"}

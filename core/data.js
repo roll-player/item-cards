@@ -17,6 +17,7 @@ try {
   debug(err)
 }
 const addItem = item => {
+  debug('Updating Item')
   return new Promise((resolve, reject) => {
     db.update({ name: item.name }, item, { upsert: true }, (err, numReplaced, upsert) => {
       if (err) {
@@ -32,8 +33,10 @@ const addItem = item => {
 }
 
 const findItem = name => {
+  debug(`Looking for item with name ${name}`)
+
   return new Promise((resolve, reject) => {
-    db.find({ name }, { id: 0 }, (err, docs) => {
+    db.find({ name: name }, { id: 0 }).limit(1).exec((err, docs) => {
       if (err) {
         debug(`Error finding item with name ${name}`)
         reject(err)
@@ -41,7 +44,7 @@ const findItem = name => {
       }
 
       debug(`Found ${docs.length} item(s) with name ${name}`)
-      resolve(docs)
+      resolve(docs[0])
       return
     })
   })

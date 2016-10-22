@@ -67,46 +67,53 @@ const generatePdf = (items, opts) => {
     }
 
     opts = Object.assign({}, opts, {
-      fileName: 'items.pdf'
+      fileName: 'items.pdf',
+      font: 'Asimov.otf'
     })
 
     checkFilePermissions(opts.fileName).then(_ => {
       let doc = new pdfkit({ margin: inchesToPoints(1) }) 
 
       doc.pipe(fs.createWriteStream(opts.fileName))
-      doc.font('Asimov.otf')
+      doc.font(opts.font)
 
       debug(`starting render ${items[0]}`)
 
-      let itemPromises = items.map(item => getItem(item))
+      const itemPromises = items.map(getItem)
 
-      console.log(itemPromises.length)
       Promise.all(itemPromises).then(values => {
-        debug('completed all')
-
         values.forEach(value => {
-          debug('rendering items')
-          renderItem(value, doc) 
+          if (value != null) {
+            renderItem(value, doc) 
+          }
         })
 
         doc.end()
         resolve(opts.fileName)
       })
-    }).catch(reject)
+    }).catch(err => reject(err))
   })
 }
 
 const getItem = item => {
   return new Promise((resolve, reject) => {
+
+    const handleError = () => {
+      debug(`Could not find item with name ${item.name}`)
+      resolve(null)
+    }
+
     data.findItem(item.name)
       .then(items => {
+        if(items.length === 0) {
+          handleError()
+          return
+        }
+
         debug(`Found item ${item.name}`)
         resolve(items[0])
       })
-      .catch(err => {
-        debug(`Could not find item with name ${item.name}`)
-        resolve(null)
-      })
+      .catch(handleError)
   })
 }
 
